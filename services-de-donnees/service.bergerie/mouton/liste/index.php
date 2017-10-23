@@ -5,7 +5,7 @@
 	$SQL_LISTE_MOUTON = "SELECT * FROM mouton";
 	$requeteListeMoutons = $basededonnees->prepare($SQL_LISTE_MOUTON);
 	$resultat = $requeteListeMoutons->execute();
-	$listeMoutons = $requeteListeMoutons->fetchAll();
+	$listeMoutons = $requeteListeMoutons->fetchAll(PDO::FETCH_OBJ);
 	//print_r($listeMoutons);
 	
 	// AFFICHAGE des données
@@ -20,9 +20,9 @@
 		//print_r($mouton);
 		?>
 		<mouton>
-			<id><?=$mouton['id_mouton']?></id>
-			<nom><?=$mouton['nom']?></nom>
-			<description><?=$mouton['description']?></description>
+			<id><?=$mouton->id_mouton?></id>
+			<nom><?=$mouton->nom?></nom>
+			<description><?=$mouton->description?></description>
 		</mouton>
 		<?php
 	}
