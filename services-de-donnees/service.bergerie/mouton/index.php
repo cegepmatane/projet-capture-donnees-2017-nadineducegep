@@ -1,14 +1,16 @@
 <?php 
 	//print_r($_GET);
 	$idMouton = $_GET['mouton'];
+	$idMouton = filter_var($idMouton, FILTER_VALIDATE_INT);
 	//echo $idMouton;
 	
 	// LECTURE des données
 	include "../basededonnees.php";
 	$SQL_MOUTON = "SELECT * FROM mouton WHERE id_mouton = " . $idMouton;
-	//echo $SQL_MOUTON;
+	echo $SQL_MOUTON;
 	$requeteMouton = $basededonnees->prepare($SQL_MOUTON);
 	$requeteMouton->execute();
+	exit();
 	$mouton = $requeteMouton->fetch(PDO::FETCH_OBJ);
 	//print_r($mouton);
 	
