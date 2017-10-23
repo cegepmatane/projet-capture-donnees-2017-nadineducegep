@@ -5,13 +5,14 @@
 	
 	// LECTURE des données
 	include "../basededonnees.php";
-	$SQL_MOUTON = "SELECT * FROM mouton WHERE id_mouton = " . $idMouton;
-	echo $SQL_MOUTON;
+	$SQL_MOUTON = "SELECT * FROM mouton WHERE id_mouton = :id_mouton";
+	//echo $SQL_MOUTON;
 	$requeteMouton = $basededonnees->prepare($SQL_MOUTON);
+	$requeteMouton->bindParam(':id_mouton', $idMouton, PDO::PARAM_INT);
 	$requeteMouton->execute();
-	exit();
 	$mouton = $requeteMouton->fetch(PDO::FETCH_OBJ);
-	//print_r($mouton);
+	print_r($mouton);
+	exit();
 	
 	// AFFICHAGE des données
 	header("Content-type: text/xml");
