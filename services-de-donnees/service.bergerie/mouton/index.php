@@ -1,7 +1,6 @@
 <?php 
 	//print_r($_GET);
-	$idMouton = $_GET['mouton'];
-	$idMouton = filter_var($idMouton, FILTER_VALIDATE_INT);
+	$idMouton = filter_input(INPUT_GET, 'mouton', FILTER_VALIDATE_INT);
 	//echo $idMouton;
 	
 	// LECTURE des données
