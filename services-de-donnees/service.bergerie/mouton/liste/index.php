@@ -7,9 +7,14 @@
 	$resultat = $requeteListeMoutons->execute();
 	$listeMoutons = $requeteListeMoutons->fetchAll();
 	//print_r($listeMoutons);
-?>
-<?php
+	
 	// AFFICHAGE des données
+	header("Content-type: text/xml");
+	echo '<?xml version="1.0" encoding="UTF-8"?>';
+?>
+
+<listeMoutons>
+<?php
 	foreach($listeMoutons as $mouton)
 	{
 		//print_r($mouton);
@@ -22,3 +27,4 @@
 		<?php
 	}
 ?>
+</listeMoutons>
