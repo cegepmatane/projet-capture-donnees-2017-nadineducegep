@@ -11,8 +11,7 @@
 	$requeteMouton->bindParam(':id_mouton', $idMouton, PDO::PARAM_INT);
 	$requeteMouton->execute();
 	$mouton = $requeteMouton->fetch(PDO::FETCH_OBJ);
-	print_r($mouton);
-	exit();
+	//print_r($mouton);
 	
 	// AFFICHAGE des données
 	header("Content-type: text/xml");
