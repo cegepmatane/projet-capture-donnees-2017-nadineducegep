@@ -9,6 +9,17 @@
 	//echo $SQL_MOUTON;
 	$requeteMouton = $basededonnees->prepare($SQL_MOUTON);
 	$requeteMouton->execute();
-	$mouton = $requeteMouton->fetch();
-	print_r($mouton);
+	$mouton = $requeteMouton->fetch(PDO::FETCH_OBJ);
+	//print_r($mouton);
 ?>
+
+<mouton>
+	<id><?=$mouton->id_mouton?></id>
+	<nom><?=$mouton->nom?></nom>
+	<description><?=$mouton->description?></description>
+	<naissance><?=$mouton->naissance?></naissance>
+	<sexe><?=$mouton->sexe?></sexe>
+	<couleur><?=$mouton->sexe?></couleur>
+	<sousespece><?=$mouton->sousespece?></sousespece>
+	<troupeau><?=$mouton->id_troupeau?></troupeau>
+</mouton>
