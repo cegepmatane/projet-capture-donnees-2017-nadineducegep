@@ -23,7 +23,7 @@ public class MoutonDuService
 	{
 
 		MoutonDAO moutonDAO = new MoutonDAO();
-		moutonDAO.trouverMouton(2);
+		moutonDAO.trouverMouton(1);
 		
 	}
 }

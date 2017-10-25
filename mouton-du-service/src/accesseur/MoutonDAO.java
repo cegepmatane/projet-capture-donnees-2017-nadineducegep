@@ -20,11 +20,12 @@ import modele.Mouton;
 public class MoutonDAO 
 {
 	public Mouton trouverMouton(int numero)
-	{
+	{		
+		
 		// Récupérer le xml
 		String xml = null;
 		try {
-			URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton/?mouton=2");
+			URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton/?mouton=" + numero);
 			//URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton.xml");
 			URLConnection serviceMouton = urlServiceMouton.openConnection();
 			InputStream fluxMouton = serviceMouton.getInputStream();
