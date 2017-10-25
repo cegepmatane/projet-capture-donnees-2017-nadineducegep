@@ -23,6 +23,11 @@ import modele.Mouton;
 
 public class MoutonDAO 
 {
+	private String lireBalise(Element element, String balise)
+	{
+		return element.getElementsByTagName("id").item(0).getTextContent();
+	}
+	
 	private Document parserXML(String xml)
 	{
 		Document doc = null;
@@ -79,13 +84,12 @@ public class MoutonDAO
 		{
 			Document document = parserXML(xml);
 			if(document == null) return null;
+			Element element = document.getDocumentElement();
+			String id = lireBalise(element, "id");
+			String nom = lireBalise(element,"nom");
+			String description = lireBalise(element,"description");
 			
-			String id = document.getElementsByTagName("id").item(0).getTextContent();
-			String nom = document.getElementsByTagName("nom").item(0).getTextContent();
-			String description = document.getElementsByTagName("description").item(0).getTextContent();
-			String troupeau = document.getElementsByTagName("troupeau").item(0).getTextContent();
-			
-			System.out.println("Variables trouvees " + id + " " + nom + " " + description + " " + troupeau);
+			System.out.println("Variables trouvees " + id + " " + nom + " " + description);
 			
 			Mouton mouton = new Mouton(nom,description);
 			mouton.setId(Integer.parseInt(id)); // TODO Ajouter robustesse
@@ -110,9 +114,9 @@ public class MoutonDAO
 			{
 				Element elementMouton = (Element)listeNoeudsMoutons.item(position);
 				//System.out.println("Tagname=" + elementMouton.getTagName());
-				String id = elementMouton.getElementsByTagName("id").item(0).getTextContent();
-				String nom = elementMouton.getElementsByTagName("nom").item(0).getTextContent();
-				String description = elementMouton.getElementsByTagName("description").item(0).getTextContent();
+				String id = lireBalise(elementMouton, "id");
+				String nom = lireBalise(elementMouton,"nom");
+				String description = lireBalise(elementMouton, "description");
 				Mouton mouton = new Mouton(nom,description);
 				mouton.setId(Integer.parseInt(id)); // TODO : robustesse 
 				listeMoutons.add(mouton);
