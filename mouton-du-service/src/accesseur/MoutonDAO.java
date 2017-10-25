@@ -23,6 +23,26 @@ import modele.Mouton;
 
 public class MoutonDAO 
 {
+	private Document parserXML(String xml)
+	{
+		Document doc = null;
+		DocumentBuilder parseur;
+		try {
+			parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			doc = parseur.parse(new StringBufferInputStream(xml));		
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return doc;
+	}
+	
 	private String consommerService(String url)
 	{
 		String xml = null;
@@ -45,6 +65,9 @@ public class MoutonDAO
 		return null;
 	}
 	
+	
+	
+	
 	public Mouton trouverMouton(int numero)
 	{		
 		
@@ -54,73 +77,47 @@ public class MoutonDAO
 		// Interprétation du xml - construire les modeles
 		if(xml != null)
 		{
-			try 
-			{
-				DocumentBuilder parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-				@SuppressWarnings("deprecation")
-				Document document = parseur.parse(new StringBufferInputStream(xml));
-				
-				String id = document.getElementsByTagName("id").item(0).getTextContent();
-				String nom = document.getElementsByTagName("nom").item(0).getTextContent();
-				String description = document.getElementsByTagName("description").item(0).getTextContent();
-				String troupeau = document.getElementsByTagName("troupeau").item(0).getTextContent();
-				
-				System.out.println("Variables trouvees " + id + " " + nom + " " + description + " " + troupeau);
-				
-				Mouton mouton = new Mouton(nom,description);
-				mouton.setId(Integer.parseInt(id)); // TODO Ajouter robustesse
-				return mouton;
-				
-			} catch (ParserConfigurationException e) {
-				e.printStackTrace();
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Document document = parserXML(xml);
+			if(document == null) return null;
+			
+			String id = document.getElementsByTagName("id").item(0).getTextContent();
+			String nom = document.getElementsByTagName("nom").item(0).getTextContent();
+			String description = document.getElementsByTagName("description").item(0).getTextContent();
+			String troupeau = document.getElementsByTagName("troupeau").item(0).getTextContent();
+			
+			System.out.println("Variables trouvees " + id + " " + nom + " " + description + " " + troupeau);
+			
+			Mouton mouton = new Mouton(nom,description);
+			mouton.setId(Integer.parseInt(id)); // TODO Ajouter robustesse
+			return mouton;
 		}		
 		return null;
 	}
 	
 	public List<Mouton> listerMoutons()
 	{
-		String xml = consommerService("http://localhost/bergerie.service/mouton/liste/);
+		String xml = consommerService("http://localhost/bergerie.service/mouton/liste/");
 	
 		// Interprétation du xml - construire les modeles
 		if(xml != null)
 		{
-			try 
-			{
-				DocumentBuilder parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-				@SuppressWarnings("deprecation")
-				Document document = parseur.parse(new StringBufferInputStream(xml));
-				
+			Document document = parserXML(xml);
+			if(document == null) return null;		
 
-				ArrayList<Mouton> listeMoutons = new ArrayList<Mouton>();
-				NodeList listeNoeudsMoutons = document.getElementsByTagName("mouton");
-				for(int position = 0; position < listeNoeudsMoutons.getLength(); position++)
-				{
-					Element elementMouton = (Element)listeNoeudsMoutons.item(position);
-					//System.out.println("Tagname=" + elementMouton.getTagName());
-					String id = elementMouton.getElementsByTagName("id").item(0).getTextContent();
-					String nom = elementMouton.getElementsByTagName("nom").item(0).getTextContent();
-					String description = elementMouton.getElementsByTagName("description").item(0).getTextContent();
-					Mouton mouton = new Mouton(nom,description);
-					mouton.setId(Integer.parseInt(id)); // TODO : robustesse 
-					listeMoutons.add(mouton);
-				}
-				return listeMoutons;
-				
-				
-			} catch (ParserConfigurationException e) {
-				e.printStackTrace();
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			ArrayList<Mouton> listeMoutons = new ArrayList<Mouton>();
+			NodeList listeNoeudsMoutons = document.getElementsByTagName("mouton");
+			for(int position = 0; position < listeNoeudsMoutons.getLength(); position++)
+			{
+				Element elementMouton = (Element)listeNoeudsMoutons.item(position);
+				//System.out.println("Tagname=" + elementMouton.getTagName());
+				String id = elementMouton.getElementsByTagName("id").item(0).getTextContent();
+				String nom = elementMouton.getElementsByTagName("nom").item(0).getTextContent();
+				String description = elementMouton.getElementsByTagName("description").item(0).getTextContent();
+				Mouton mouton = new Mouton(nom,description);
+				mouton.setId(Integer.parseInt(id)); // TODO : robustesse 
+				listeMoutons.add(mouton);
 			}
+			return listeMoutons;
 		}		
 		
 		
