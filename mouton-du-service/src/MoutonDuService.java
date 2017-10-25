@@ -14,6 +14,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import modele.Mouton;
+
 public class MoutonDuService 
 {
 	public static void main(String[] args) 
@@ -51,6 +53,9 @@ public class MoutonDuService
 				String troupeau = document.getElementsByTagName("troupeau").item(0).getTextContent();
 				
 				System.out.println("Variables trouvees " + id + " " + nom + " " + description + " " + troupeau);
+				
+				Mouton mouton = new Mouton(nom,description);
+				mouton.setId(Integer.parseInt(id)); // TODO Ajouter robustesse
 				
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
