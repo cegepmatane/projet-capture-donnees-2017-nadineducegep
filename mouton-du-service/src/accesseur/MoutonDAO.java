@@ -23,13 +23,11 @@ import modele.Mouton;
 
 public class MoutonDAO 
 {
-	public Mouton trouverMouton(int numero)
-	{		
-		
-		// Récupérer le xml
+	private String consommerService(String url)
+	{
 		String xml = null;
 		try {
-			URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton/?mouton=" + numero);
+			URL urlServiceMouton = new URL(url);
 			//URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton.xml");
 			URLConnection serviceMouton = urlServiceMouton.openConnection();
 			InputStream fluxMouton = serviceMouton.getInputStream();
@@ -37,12 +35,21 @@ public class MoutonDAO
 			Scanner lecteur = new Scanner(fluxMouton).useDelimiter("\\A");
 			xml = lecteur.hasNext() ? lecteur.next() : "";
 			System.out.println(xml);
+			return xml;
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public Mouton trouverMouton(int numero)
+	{		
+		
+		// Récupérer le xml
+		String xml = consommerService("http://localhost/bergerie.service/mouton/?mouton=" + numero);
 		
 		// Interprétation du xml - construire les modeles
 		if(xml != null)
@@ -78,22 +85,7 @@ public class MoutonDAO
 	
 	public List<Mouton> listerMoutons()
 	{
-		// Récupérer le xml
-		String xml = null;
-		try {
-			URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton/liste/");
-			URLConnection serviceMouton = urlServiceMouton.openConnection();
-			InputStream fluxMouton = serviceMouton.getInputStream();
-			
-			Scanner lecteur = new Scanner(fluxMouton).useDelimiter("\\A");
-			xml = lecteur.hasNext() ? lecteur.next() : "";
-			System.out.println(xml);
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		String xml = consommerService("http://localhost/bergerie.service/mouton/liste/);
 	
 		// Interprétation du xml - construire les modeles
 		if(xml != null)
