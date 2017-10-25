@@ -24,6 +24,7 @@ public class MoutonDuService
 
 		MoutonDAO moutonDAO = new MoutonDAO();
 		moutonDAO.trouverMouton(1);
+		moutonDAO.listerMoutons();
 		
 	}
 }
