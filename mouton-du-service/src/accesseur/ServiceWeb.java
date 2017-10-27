@@ -45,7 +45,6 @@ public class ServiceWeb {
 		String xml = null;
 		try {
 			URL urlServiceMouton = new URL(url);
-			//URL urlServiceMouton = new URL("http://localhost/bergerie.service/mouton.xml");
 			URLConnection serviceMouton = urlServiceMouton.openConnection();
 			InputStream fluxMouton = serviceMouton.getInputStream();
 			
