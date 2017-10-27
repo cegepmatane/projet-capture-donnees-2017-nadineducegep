@@ -37,7 +37,7 @@ public class MoutonDAO
 			Element element = document.getDocumentElement();
 			String id = ServiceWeb.lireBalise(element, "id");
 			String nom = ServiceWeb.lireBalise(element,"nom");
-			String description = ServiceWeb.lireBalise(element,"description");
+			String description = element.getElementsByTagName("description").item(0).getTextContent();
 			
 			System.out.println("Variables trouvees " + id + " " + nom + " " + description);
 			
@@ -66,7 +66,8 @@ public class MoutonDAO
 				//System.out.println("Tagname=" + elementMouton.getTagName());
 				String id = ServiceWeb.lireBalise(elementMouton, "id");
 				String nom = ServiceWeb.lireBalise(elementMouton,"nom");
-				String description = ServiceWeb.lireBalise(elementMouton, "description");
+				String description = elementMouton.getElementsByTagName("description").item(0).getTextContent();
+				
 				Mouton mouton = new Mouton(nom,description);
 				mouton.setId(Integer.parseInt(id)); // TODO : robustesse 
 				listeMoutons.add(mouton);

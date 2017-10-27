@@ -20,7 +20,7 @@ public class ServiceWeb {
 
 	public static String lireBalise(Element element, String balise)
 	{
-		return element.getElementsByTagName("id").item(0).getTextContent();
+		return element.getElementsByTagName(balise).item(0).getTextContent();
 	}
 	
 	public static Document parserXML(String xml)
@@ -31,13 +31,10 @@ public class ServiceWeb {
 			parseur = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			doc = parseur.parse(new StringBufferInputStream(xml));		
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return doc;
